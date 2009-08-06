@@ -1,7 +1,9 @@
 #ifndef _MATH_MT_H_
 #define _MATH_MT_H_
 
-#if defined(__linux__) || defined(__WIN32__) || defined(__GLIBC__)
+#if defined(_MSC_VER) && (_MSC_VER <= 1300)
+typedef unsigned __int32 uint32_t;
+#elif defined(__linux__) || defined(__GLIBC__) || defined(__WIN32__)
 #include <stdint.h>
 #elif defined(__osf__)
 #include <inttypes.h>
