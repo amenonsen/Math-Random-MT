@@ -1,3 +1,9 @@
+1.09    2009-08-06      Abhijit Menon-Sen <ams@toroid.org>
+
+    * Compile fix for MSVC, which has no stdint.h.
+      (Thanks to Taro Nishino for the report and patch.)
+
+
 1.08    2009-08-06      Abhijit Menon-Sen <ams@toroid.org>
 
     * BSD license
