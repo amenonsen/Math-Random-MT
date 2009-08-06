@@ -1,7 +1,9 @@
-1.09    2009-08-06      Abhijit Menon-Sen <ams@toroid.org>
+1.10    2009-08-06      Abhijit Menon-Sen <ams@toroid.org>
 
     * Compile fix for MSVC, which has no stdint.h.
       (Thanks to Taro Nishino for the report and patch.)
+
+    (I made a mistake releasing 1.09.)
 
 
 1.08    2009-08-06      Abhijit Menon-Sen <ams@toroid.org>
