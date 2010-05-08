@@ -14,4 +14,4 @@ use Math::Random::MT;
 my $gen;
 ok($loaded = 1);
 ok( $gen = Math::Random::MT->new(1, 2, 3, 4) );
-ok( $gen->rand(1), 0.67886575916782 );
+ok(abs($gen->rand(1) - 0.67886575916782) < 1e-14);
