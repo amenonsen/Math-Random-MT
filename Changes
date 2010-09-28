@@ -1,3 +1,9 @@
+1.12    2010-09-29      Abhijit Menon-Sen <ams@toroid.org>
+
+    * Fix OS X build failure reported by Daniel Barker and fixed by
+      Tokuhiro Matsuno.
+
+
 1.11    2010-05-08      Abhijit Menon-Sen <ams@toroid.org>
 
     * Fix tests broken by overly optimistic floating point comparison
