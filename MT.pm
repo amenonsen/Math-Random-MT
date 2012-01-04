@@ -3,6 +3,7 @@ package Math::Random::MT;
 use strict;
 use Carp;
 use DynaLoader;
+use Time::HiRes qw(gettimeofday); # standard in Perl >= 5.8
 use vars qw( @ISA $VERSION );
 
 my $gen = undef;
@@ -13,13 +14,13 @@ bootstrap Math::Random::MT $VERSION;
 
 sub new
 {
-    my $class = shift;
+    my ($class, @seeds) = @_;
 
-    if ( @_ == 1 ) {
-        return Math::Random::MT::setup( shift );
+    if ( scalar @seeds == 1 ) {
+        return Math::Random::MT::setup( $seeds[0] );
     }
     else {
-        return Math::Random::MT::setup_array( @_ );
+        return Math::Random::MT::setup_array( @seeds );
     }
 }
 
@@ -37,7 +38,25 @@ sub rand
 }
 
 # Don't rely on the default seed.
-sub srand { $gen = new Math::Random::MT (shift || time); }
+sub srand {
+    $gen = new Math::Random::MT (shift || time);
+    #return $$gen;
+}
+
+sub _rand_seed {
+    # Create a random seed using Perl's builtin random number generator system
+    my ($self) = @_;
+    # 1/ Seed Perl's srand() with a temporary random seed that varies quickly
+    # in time so that no two identical seeds are obtained if several seeds are
+    # automatically generated in a short time interval
+    my $tmp_seed = (gettimeofday)[1]; # time in microseconds
+    CORE::srand($tmp_seed);
+    # 2/ Generate the random seed to use using Perl's builtin rand() (unsigned
+    # 32-bit integer)
+    my $max = int(2**32-1); # Largest unsigned 32-bit integer
+    my $rand_seed = int(CORE::rand($max+1)); # An integer between 0 and $max
+    return $rand_seed;
+}
 
 sub import
 {
