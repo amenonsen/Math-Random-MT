@@ -2,17 +2,15 @@ use strict;
 
 use Test;
 use vars qw($loaded $num1 $num2);
-use Benchmark qw(timediff timestr);
 
 BEGIN { plan tests => 7 }
 END   { print "not ok 1\n" unless $loaded }
 
-# Check that it's possible to call rand() without srand()
-
 use Math::Random::MT qw(srand rand);
 ok($loaded = 1);
+srand; # explicit srand, but without number
 eval { $num1 = rand; };
-ok($@, '', '$@ should be empty after rand() but it\'s: '.$@);
+ok($@, '', '$@ should be empty after rand()');
 ok(defined($num1));
 ok(0 <= $num1);
 ok($num1 < 1); # rand without argument is like rand(1)

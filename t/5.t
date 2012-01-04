@@ -2,16 +2,21 @@ use strict;
 
 use Test;
 use vars qw($loaded);
-use Benchmark qw(timediff timestr);
 
-BEGIN { plan tests => 3 }
+BEGIN { plan tests => 5 }
 END   { print "not ok 1\n" unless $loaded }
 
-# Check that the results are the same with the function-call interface
-# as with the OO interface
+# OO interface
+# Check that we can use an array to seed the generator.
 
-use Math::Random::MT qw(srand rand);
+use Math::Random::MT;
+
+my $gen;
 ok($loaded = 1);
-srand(5489);
-ok(abs( 0.814723691903055 - rand()) < 1e-14);
-ok(abs( 0.135477004107088 - rand()) < 1e-14);
+ok( $gen = Math::Random::MT->new(1, 2, 3, 4) );
+ok( (sprintf"%.12f",$gen->rand(1)), 0.678865759168 );
+
+# high value seeds broke initial implementation of mt_setup_array()
+ok( $gen = Math::Random::MT->new(1, 2, 3, 2**31) );
+ok( (sprintf"%.12f",$gen->rand(1)), 0.336814725539 );
+
