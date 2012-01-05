@@ -16,6 +16,13 @@ MODULE = Math::Random::MT   PACKAGE = Math::Random::MT  PREFIX = mt_
 PROTOTYPES: DISABLE
 
 Math::Random::MT
+mt_init()
+    CODE:
+        RETVAL = mt_init();
+    OUTPUT:
+        RETVAL
+
+Math::Random::MT
 mt_setup(seed)
     U32     seed
     CODE:

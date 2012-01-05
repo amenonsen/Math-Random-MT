@@ -26,6 +26,12 @@ void mt_init_seed( struct mt *m, uint32_t seed )
     m->mti = N;
 }
 
+struct mt *mt_init(void)
+{
+    struct mt *self = malloc(sizeof(struct mt));
+    return self;
+}
+
 struct mt *mt_setup(uint32_t seed)
 {
     struct mt *self = malloc(sizeof(struct mt));
