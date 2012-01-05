@@ -40,7 +40,6 @@ sub rand
 # Don't rely on the default seed.
 sub srand {
     $gen = new Math::Random::MT (shift || time);
-    #return $$gen;
 }
 
 sub _rand_seed {
