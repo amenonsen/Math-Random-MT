@@ -1,6 +1,7 @@
 1.xx
-    * New automatic seed generation mechanism by Florent Angly
-    * Interfaces to retrieve the seed used Florent Angly
+
+    * New automatic seed generation mechanism by Florent Angly (bug #64640)
+    * Interfaces to retrieve the seed used implemeted by Florent Angly (bug #64640)
 
 1.12    2010-09-29      Abhijit Menon-Sen <ams@toroid.org>
 
