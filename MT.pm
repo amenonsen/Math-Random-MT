@@ -18,7 +18,7 @@ sub new
     my ($class, @seeds) = @_;
     my $self = Math::Random::MT::init();
     # Seed the random number generator
-    Math::Random::MT::set_seed($self, @seeds);
+    $self->set_seed(@seeds);
     return $self;
 }
 
@@ -37,24 +37,20 @@ sub rand
 
 sub set_seed
 {
-    # Set the seed
+    # Set the seed. Generate one automatically if none was provided.
     my ($self, @seeds) = @_;
-    Math::Random::MT::clear_seed($self);
-    @seeds > 1 ? Math::Random::MT::setup_array($self, @seeds) :
-                 Math::Random::MT::init_seed($self, $seeds[0]||_rand_seed());
+    $self->clear_seed();
+    @seeds > 1 ? $self->setup_array(@seeds) :
+                 $self->init_seed($seeds[0]||_rand_seed());
     return 1;
 }
 
-sub srand {
-    # Seed the random number generator, automatically generating a seed if none
-    # is provided
+sub srand
+{
+    # Seed the random number generator and return the seed.
     my (@seeds) = @_;
-    if (not @seeds) {
-      $seeds[0] = _rand_seed();
-    }
     $gen = Math::Random::MT->new(@seeds);
-    my $seed = $gen->get_seed;
-    return $seed;
+    return $gen->get_seed;
 }
 
 sub _rand_seed {
