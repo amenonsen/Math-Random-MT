@@ -16,6 +16,7 @@ enum { N = 624, M = 397 };
 struct mt {
     uint32_t mt[N];
     int mti;
+    uint32_t seed;
 };
 
 struct mt *mt_init(void);

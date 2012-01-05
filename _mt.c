@@ -24,6 +24,7 @@ void mt_init_seed( struct mt *self, uint32_t seed )
     for ( i = 1; i < N; i++ )
         mt[i] = 1812433253 * (mt[i-1]^(mt[i-1]>>30)) + i;
     self->mti = N;
+    self->seed = mt[0];
 }
 
 struct mt *mt_init(void)
