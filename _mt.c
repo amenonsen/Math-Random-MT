@@ -66,6 +66,13 @@ void mt_free(struct mt *self)
     free(self);
 }
 
+uint32_t mt_get_seed(struct mt *self)
+{
+    uint32_t *mt;
+    mt = self->mt;
+    return mt[0];
+}
+
 /* Returns a pseudorandom number which is uniformly distributed in [0,1) */
 double mt_genrand(struct mt *self)
 {

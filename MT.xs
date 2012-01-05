@@ -48,6 +48,14 @@ mt_DESTROY(self)
     CODE:
         mt_free(self);
 
+int
+mt_get_seed(self)
+    Math::Random::MT self
+    CODE:
+        RETVAL = mt_get_seed(self);
+    OUTPUT:
+        RETVAL
+
 double
 mt_genrand(self)
     Math::Random::MT self

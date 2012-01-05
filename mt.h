@@ -23,6 +23,7 @@ struct mt *mt_init(void);
 void mt_init_seed(struct mt *self, uint32_t seed);
 void mt_setup_array(struct mt *self, uint32_t *array, int n);
 void mt_free(struct mt *self);
+uint32_t mt_get_seed(struct mt *self);
 double mt_genrand(struct mt *self);
 
 #endif
