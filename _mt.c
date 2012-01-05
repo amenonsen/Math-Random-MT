@@ -18,26 +18,23 @@
    ACM Transactions on Modeling and Computer Simulation,
    Vol. 8, No. 1, January 1998, pp 3--30. */
 
-void mt_init_seed( struct mt *self, uint32_t seed )
+void mt_init_seed(struct mt *self, uint32_t seed)
 {
     int i;
     uint32_t *mt;
 
     mt = self->mt;
-
     mt[0] = seed & 0xffffffff;
 
     for ( i = 1; i < N; i++ )
         mt[i] = 1812433253 * (mt[i-1]^(mt[i-1]>>30)) + i;
     self->mti = N;
     self->seed = mt[0];
-
 }
 
 struct mt *mt_init(void)
 {
     struct mt *self = malloc(sizeof(struct mt));
-
     return self;
 }
 
@@ -75,30 +72,22 @@ void mt_free(struct mt *self)
 
 uint32_t mt_get_seed(struct mt *self)
 {
-    uint32_t *mt, seed;
-    mt = self->mt;
-    seed = mt[0];
+    uint32_t seed;
+    seed = self->seed;
     return seed;
 }
 
-void mt_clear_seed(struct mt *self)
-{
-
-
-    //#define LEN 40000
-    //int a[LEN]
-    //memset((void*)&a, 0, sizeof(int)*LEN);
-
-    //self->mt = NULL;
-    //self->mt = { NULL };
-
-    //uint32_t *mt;
-    //mt = self->mt;
-    //self->mt = memset((void*)&mt, 0, sizeof(uint32_t)*N);
-
-    //self->mti = NULL;
-    //self->seed = NULL;
-}
+/*void mt_set_seed(struct mt *self, uint32_t *array, int n)*/
+/*{*/
+/*    mt_clear_seed(self);*/
+/*    if (n > 1) {*/
+/*        mt_setup_array(self, array, n);*/
+/*    }*/
+/*    else {*/
+/*        //// if array[0] is not defined, call _rand_seed()
+/*        mt_init_seed(self, array[0]);*/
+/*    }*/
+/*}*/
 
 /* Returns a pseudorandom number which is uniformly distributed in [0,1) */
 double mt_genrand(struct mt *self)

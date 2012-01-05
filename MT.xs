@@ -58,12 +58,6 @@ mt_get_seed(self)
     OUTPUT:
         RETVAL
 
-void
-mt_clear_seed(self)
-    Math::Random::MT self
-    CODE:
-        mt_clear_seed(self);
-
 double
 mt_genrand(self)
     Math::Random::MT self

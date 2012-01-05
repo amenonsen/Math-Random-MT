@@ -1,3 +1,7 @@
+1.xx
+    * New automatic seed generation mechanism by Florent Angly
+    * Interfaces to retrieve the seed used Florent Angly
+
 1.12    2010-09-29      Abhijit Menon-Sen <ams@toroid.org>
 
     * Fix OS X build failure reported by Daniel Barker and fixed by

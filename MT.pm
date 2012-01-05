@@ -39,7 +39,6 @@ sub set_seed
 {
     # Set the seed. Generate one automatically if none was provided.
     my ($self, @seeds) = @_;
-    $self->clear_seed();
     @seeds > 1 ? $self->setup_array(@seeds) :
                  $self->init_seed($seeds[0]||_rand_seed());
     return 1;
@@ -72,7 +71,6 @@ sub import
 {
     no strict 'refs';
     my $pkg = caller;
-
     foreach my $sym (@_) {
         if ($sym eq "srand" || $sym eq "rand") {
             *{"${pkg}::$sym"} = \&$sym;
@@ -90,40 +88,68 @@ Math::Random::MT - The Mersenne Twister PRNG
 
 =head1 SYNOPSIS
 
- use Math::Random::MT;
+  ## Object-oriented interface:
+  use Math::Random::MT;
+  $gen = Math::Random::MT->new()        # or...
+  $gen = Math::Random::MT->new($seed);  # or...
+  $gen = Math::Random::MT->new(@seeds);
+  $seed = $gen->get_seed();             # seed used to generate the random numbers
+  $rand = $gen->rand(42);               # random number in the interval [0, 42)
+  $dice = int($gen->rand(6)+1);         # random integer between 1 and 6
+  $coin = $gen->rand() < 0.5 ?          # flip a coin
+    "heads" : "tails"
 
- $gen = Math::Random::MT->new($seed); # OR...
- $gen = Math::Random::MT->new(@seed);
-
- print $gen->rand(3);
-
- OR
-
- use Math::Random::MT qw(srand rand);
-
- # now srand and rand behave as usual.
+  ## Function-oriented interface:
+  use Math::Random::MT qw(srand rand);
+  # now use srand() and rand() as you usually do in Perl
 
 =head1 DESCRIPTION
 
 The Mersenne Twister is a pseudorandom number generator developed by
 Makoto Matsumoto and Takuji Nishimura. It is described in their paper at
-<URL:http://www.math.keio.ac.jp/~nisimura/random/doc/mt.ps>.
+<URL:http://www.math.keio.ac.jp/~nisimura/random/doc/mt.ps>. This algorithm
+has a very uniform distribution and is good for modelling purposes but do not
+use it for cryptography. 
 
-This module implements two interfaces, as described in the synopsis
-above. It defines the following functions.
+This module implements two interfaces:
 
-=head2 Functions
+=head2 Object-oriented interface
 
 =over
+
+=item new()
+
+Creates a new generator that is automatically seeded. The seed varies quickly
+in time so you can run many automatically-seeded processes at once without
+getting the same random numbers.
 
 =item new($seed)
 
 Creates a new generator seeded with an unsigned 32-bit integer.
 
-=item new(@seed)
+=item new(@seeds)
 
 Creates a new generator seeded with an array of (up to 624) unsigned
 32-bit integers.
+
+=item set_seed()
+
+Seeds the generator. It takes the same arguments as I<new()>.
+
+=item get_seed()
+
+Retrieves the value of the seed used.
+
+=item rand($num)
+
+Behaves exactly like Perl's builtin rand(), returning a number uniformly
+distributed in [0, $num) ($num defaults to 1).
+
+=back
+
+=head2 Function-oriented interface
+
+=over
 
 =item rand($num)
 
@@ -132,10 +158,10 @@ distributed in [0, $num) ($num defaults to 1).
 
 =item srand($seed)
 
-This is an alternative interface to the module's functionality. It
-behaves just like Perl's builtin srand(). If you use this interface, it
-is strongly recommended that you call I<srand()> explicitly, rather than
-relying on I<rand()> to call it the first time it is used.
+Behaves just like Perl's builtin srand(). As in Perl >= 5.14, the seed is
+returned. If you use this interface, it is strongly recommended that you
+call I<srand()> explicitly, rather than relying on I<rand()> to call it the
+first time it is used.
 
 =back
 
@@ -144,6 +170,8 @@ relying on I<rand()> to call it the first time it is used.
 <URL:http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html>
 
 Math::TrulyRandom
+
+Math::Random::MT::Perl
 
 =head1 ACKNOWLEDGEMENTS
 
