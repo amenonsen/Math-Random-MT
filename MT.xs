@@ -22,26 +22,25 @@ mt_init()
     OUTPUT:
         RETVAL
 
-Math::Random::MT
-mt_setup(seed)
+void
+mt_setup(self, seed)
+    Math::Random::MT self
     U32     seed
     CODE:
-        RETVAL = mt_setup(seed);
-    OUTPUT:
-        RETVAL
+        mt_setup(self, seed);
 
-Math::Random::MT
-mt_setup_array( array, ... )
+void
+mt_setup_array(self, array, ...)
+    Math::Random::MT self
     CODE:
+        items--;
         U32 * array = U32ArrayPtr( items );
         U32 ix_array = 0;
-        while (items--) {
-            array[ix_array] = (U32)SvIV(ST(ix_array));
+        while ( items--) {
+            array[ix_array] = (U32)SvIV(ST(ix_array+1));
             ix_array++;
         }
-        RETVAL = mt_setup_array( (uint32_t*)array, ix_array );
-    OUTPUT:
-        RETVAL
+        mt_setup_array(self, (uint32_t*)array, ix_array);
 
 void
 mt_DESTROY(self)

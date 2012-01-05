@@ -15,15 +15,14 @@ bootstrap Math::Random::MT $VERSION;
 sub new
 {
     my ($class, @seeds) = @_;
-
     my $self = Math::Random::MT::init();
-
     if ( scalar @seeds == 1 ) {
-        return Math::Random::MT::setup( $seeds[0] );
+        Math::Random::MT::setup($self, $seeds[0]);
     }
     else {
-        return Math::Random::MT::setup_array( @seeds );
+        Math::Random::MT::setup_array($self, @seeds);
     }
+    return $self;
 }
 
 sub rand

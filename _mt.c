@@ -32,46 +32,36 @@ struct mt *mt_init(void)
     return self;
 }
 
-struct mt *mt_setup(uint32_t seed)
+void mt_setup(struct mt *self, uint32_t seed)
 {
-    struct mt *self = malloc(sizeof(struct mt));
-
-    if (self)
-        mt_init_seed( self, seed );
-
-    return self;
+    mt_init_seed(self, seed);
 }
 
-struct mt *mt_setup_array( uint32_t *array, int n )
+void mt_setup_array(struct mt *self, uint32_t *array, int n)
 {
     int i, j, k;
-    struct mt *self = malloc(sizeof(struct mt));
     uint32_t *mt;
 
-    if (self) {
-        mt_init_seed( self, 19650218UL );
+    mt_init_seed( self, 19650218UL );
 
-        i = 1; j = 0;
-        k = ( N > n ? N : n );
-        mt = self->mt;
+    i = 1; j = 0;
+    k = ( N > n ? N : n );
+    mt = self->mt;
 
-        for (; k; k--) {
-            mt[i] = (mt[i] ^ ((mt[i-1] ^ (mt[i-1] >> 30)) * 1664525UL))
-                    + array[j] + j;
-            i++; j++;
-            if (i>=N) { mt[0] = mt[N-1]; i=1; }
-            if (j>=n) j=0;
-        }
-        for (k=N-1; k; k--) {
-            mt[i] = (mt[i] ^ ((mt[i-1] ^ (mt[i-1] >> 30)) * 1566083941UL)) - i;
-            i++;
-            if (i>=N) { mt[0] = mt[N-1]; i=1; }
-        }
-
-        mt[0] = 0x80000000UL;
+    for (; k; k--) {
+        mt[i] = (mt[i] ^ ((mt[i-1] ^ (mt[i-1] >> 30)) * 1664525UL)) + array[j]
+                + j;
+        i++; j++;
+        if (i>=N) { mt[0] = mt[N-1]; i=1; }
+        if (j>=n) j=0;
+    }
+    for (k=N-1; k; k--) {
+        mt[i] = (mt[i] ^ ((mt[i-1] ^ (mt[i-1] >> 30)) * 1566083941UL)) - i;
+        i++;
+        if (i>=N) { mt[0] = mt[N-1]; i=1; }
     }
 
-    return self;
+    mt[0] = 0x80000000UL;
 }
 
 void mt_free(struct mt *self)

@@ -19,8 +19,8 @@ struct mt {
 };
 
 struct mt *mt_init(void);
-struct mt *mt_setup(uint32_t seed);
-struct mt *mt_setup_array(uint32_t *array, int n);
+void mt_setup(struct mt *self, uint32_t seed);
+void mt_setup_array(struct mt *self, uint32_t *array, int n);
 void mt_free(struct mt *self);
 double mt_genrand(struct mt *self);
 
