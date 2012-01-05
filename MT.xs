@@ -23,11 +23,11 @@ mt_init()
         RETVAL
 
 void
-mt_setup(self, seed)
+mt_init_seed(self, seed)
     Math::Random::MT self
     U32     seed
     CODE:
-        mt_setup(self, seed);
+        mt_init_seed(self, seed);
 
 void
 mt_setup_array(self, array, ...)

@@ -14,27 +14,23 @@
    ACM Transactions on Modeling and Computer Simulation,
    Vol. 8, No. 1, January 1998, pp 3--30. */
 
-void mt_init_seed( struct mt *m, uint32_t seed )
+void mt_init_seed( struct mt *self, uint32_t seed )
 {
     int i;
     uint32_t *mt;
 
-    mt = m->mt;
+    mt = self->mt;
     mt[0] = seed & 0xffffffff;
     for ( i = 1; i < N; i++ )
         mt[i] = 1812433253 * (mt[i-1]^(mt[i-1]>>30)) + i;
-    m->mti = N;
+    self->mti = N;
 }
 
 struct mt *mt_init(void)
 {
     struct mt *self = malloc(sizeof(struct mt));
-    return self;
-}
 
-void mt_setup(struct mt *self, uint32_t seed)
-{
-    mt_init_seed(self, seed);
+    return self;
 }
 
 void mt_setup_array(struct mt *self, uint32_t *array, int n)

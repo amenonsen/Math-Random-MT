@@ -17,7 +17,7 @@ sub new
     my ($class, @seeds) = @_;
     my $self = Math::Random::MT::init();
     if ( scalar @seeds == 1 ) {
-        Math::Random::MT::setup($self, $seeds[0]);
+        Math::Random::MT::init_seed($self, $seeds[0]);
     }
     else {
         Math::Random::MT::setup_array($self, @seeds);
