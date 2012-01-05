@@ -5,6 +5,7 @@
 
 #include "mt.h"
 
+
 typedef struct mt * Math__Random__MT;
 
 void * U32ArrayPtr ( int n ) {
@@ -48,13 +49,20 @@ mt_DESTROY(self)
     CODE:
         mt_free(self);
 
-int
+double
 mt_get_seed(self)
     Math::Random::MT self
     CODE:
-        RETVAL = mt_get_seed(self);
+        uint32_t seed = mt_get_seed(self);
+        RETVAL = (double) seed;
     OUTPUT:
         RETVAL
+
+void
+mt_clear_seed(self)
+    Math::Random::MT self
+    CODE:
+        mt_clear_seed(self);
 
 double
 mt_genrand(self)

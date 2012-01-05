@@ -14,14 +14,11 @@ bootstrap Math::Random::MT $VERSION;
 
 sub new
 {
+    # Create a Math::Random::MT::Perl object
     my ($class, @seeds) = @_;
     my $self = Math::Random::MT::init();
-    if ( scalar @seeds == 1 ) {
-        Math::Random::MT::init_seed($self, $seeds[0]);
-    }
-    else {
-        Math::Random::MT::setup_array($self, @seeds);
-    }
+    # Seed the random number generator
+    Math::Random::MT::set_seed($self, @seeds);
     return $self;
 }
 
@@ -38,9 +35,26 @@ sub rand
     }
 }
 
-# Don't rely on the default seed.
+sub set_seed
+{
+    # Set the seed
+    my ($self, @seeds) = @_;
+    Math::Random::MT::clear_seed($self);
+    @seeds > 1 ? Math::Random::MT::setup_array($self, @seeds) :
+                 Math::Random::MT::init_seed($self, $seeds[0]||_rand_seed());
+    return 1;
+}
+
 sub srand {
-    $gen = new Math::Random::MT (shift || time);
+    # Seed the random number generator, automatically generating a seed if none
+    # is provided
+    my (@seeds) = @_;
+    if (not @seeds) {
+      $seeds[0] = _rand_seed();
+    }
+    $gen = Math::Random::MT->new(@seeds);
+    my $seed = $gen->get_seed;
+    return $seed;
 }
 
 sub _rand_seed {

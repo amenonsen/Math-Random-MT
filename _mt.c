@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+////
+#include <inttypes.h>
+////
+
 /* This code is based on mt19937ar.c, written by Takuji Nishimura and
    Makoto Matsumoto (20020126). Further details are available at
    <http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html>.
@@ -20,11 +24,14 @@ void mt_init_seed( struct mt *self, uint32_t seed )
     uint32_t *mt;
 
     mt = self->mt;
+
     mt[0] = seed & 0xffffffff;
+
     for ( i = 1; i < N; i++ )
         mt[i] = 1812433253 * (mt[i-1]^(mt[i-1]>>30)) + i;
     self->mti = N;
     self->seed = mt[0];
+
 }
 
 struct mt *mt_init(void)
@@ -68,9 +75,29 @@ void mt_free(struct mt *self)
 
 uint32_t mt_get_seed(struct mt *self)
 {
-    uint32_t *mt;
+    uint32_t *mt, seed;
     mt = self->mt;
-    return mt[0];
+    seed = mt[0];
+    return seed;
+}
+
+void mt_clear_seed(struct mt *self)
+{
+
+
+    //#define LEN 40000
+    //int a[LEN]
+    //memset((void*)&a, 0, sizeof(int)*LEN);
+
+    //self->mt = NULL;
+    //self->mt = { NULL };
+
+    //uint32_t *mt;
+    //mt = self->mt;
+    //self->mt = memset((void*)&mt, 0, sizeof(uint32_t)*N);
+
+    //self->mti = NULL;
+    //self->seed = NULL;
 }
 
 /* Returns a pseudorandom number which is uniformly distributed in [0,1) */
