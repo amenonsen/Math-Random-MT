@@ -3,10 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-////
-#include <inttypes.h>
-////
-
 /* This code is based on mt19937ar.c, written by Takuji Nishimura and
    Makoto Matsumoto (20020126). Further details are available at
    <http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html>.
@@ -76,18 +72,6 @@ uint32_t mt_get_seed(struct mt *self)
     seed = self->seed;
     return seed;
 }
-
-/*void mt_set_seed(struct mt *self, uint32_t *array, int n)*/
-/*{*/
-/*    mt_clear_seed(self);*/
-/*    if (n > 1) {*/
-/*        mt_setup_array(self, array, n);*/
-/*    }*/
-/*    else {*/
-/*        //// if array[0] is not defined, call _rand_seed()
-/*        mt_init_seed(self, array[0]);*/
-/*    }*/
-/*}*/
 
 /* Returns a pseudorandom number which is uniformly distributed in [0,1) */
 double mt_genrand(struct mt *self)

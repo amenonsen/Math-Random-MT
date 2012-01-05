@@ -25,14 +25,12 @@ sub new
 sub rand
 {
     my ($self, $N) = @_;
-    if (ref $self) {
-        return ($N || 1) * $self->genrand();
-    }
-    else {
+    if (not ref $self) {
         $N = $self;
         Math::Random::MT::srand() unless defined $gen;
-        return ($N || 1) * $gen->genrand();
+        $self = $gen;
     }
+    return ($N || 1) * $self->genrand();
 }
 
 sub set_seed
