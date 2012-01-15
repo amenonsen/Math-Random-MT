@@ -19,4 +19,3 @@ ok( (sprintf"%.12f",$gen->rand(1)), 0.678865759168 );
 # high value seeds broke initial implementation of mt_setup_array()
 ok( $gen = Math::Random::MT->new(1, 2, 3, 2**31) );
 ok( (sprintf"%.12f",$gen->rand(1)), 0.336814725539 );
-

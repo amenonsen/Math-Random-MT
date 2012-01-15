@@ -107,7 +107,7 @@ The Mersenne Twister is a pseudorandom number generator developed by
 Makoto Matsumoto and Takuji Nishimura. It is described in their paper at
 <URL:http://www.math.keio.ac.jp/~nisimura/random/doc/mt.ps>. This algorithm
 has a very uniform distribution and is good for modelling purposes but do not
-use it for cryptography. 
+use it for cryptography.
 
 This module implements two interfaces:
 
