@@ -55,14 +55,11 @@ sub rand
 sub _rand_seed {
     my ($self) = @_;
 
-    # Seed rand with the number of microseconds elapsed in the current
-    # second. XXX The range is only a million values, repeating every
-    # second. Can't we do better? XXX
+    # Seed rand with the same gettimeofday-based formula that is
+    # used in Perl, and return an integer between 0 and 2**32-1.
 
-    CORE::srand((gettimeofday)[1]);
-
-    # Use a random integer between 0 and 2**32-1 as our seed.
-
+    my ($s, $u) = gettimeofday;
+    CORE::srand(1000003*$s+3*$u);
     return int(CORE::rand(2**32));
 }
 
@@ -118,7 +115,7 @@ This module implements two interfaces:
 
 =item new()
 
-Creates a new generator that is automatically seeded.
+Creates a new generator that is automatically seeded based on gettimeofday.
 
 =item new($seed)
 
