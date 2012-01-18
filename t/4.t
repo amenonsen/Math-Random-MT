@@ -1,17 +1,20 @@
 use strict;
 
 use Test;
-use vars qw($loaded);
-use Benchmark qw(timediff timestr);
+use vars qw($loaded $num1 $num2);
 
-BEGIN { plan tests => 3 }
+BEGIN { plan tests => 7 }
 END   { print "not ok 1\n" unless $loaded }
 
-# Check that the results are the same with the function-call interface
-# as with the OO interface
+# Check that it's possible to call rand() without srand()
 
 use Math::Random::MT qw(srand rand);
 ok($loaded = 1);
-srand(5489);
-ok(abs( 0.814723691903055 - rand()) < 1e-14);
-ok(abs( 0.135477004107088 - rand()) < 1e-14);
+eval { $num1 = rand; };
+ok($@, '', '$@ should be empty after rand() but it\'s: '.$@);
+ok(defined($num1));
+ok(0 <= $num1);
+ok($num1 < 1); # rand without argument is like rand(1)
+eval { $num2 = rand; };
+ok($@, '', '$@ should also be empty the second time rand() is called');
+ok($num1 != $num2);

@@ -2,7 +2,6 @@ use strict;
 
 use Test;
 use vars qw($loaded $num1 $num2);
-use Benchmark qw(timediff timestr);
 
 BEGIN { plan tests => 7 }
 END   { print "not ok 1\n" unless $loaded }

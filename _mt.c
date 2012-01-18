@@ -14,57 +14,9 @@
    ACM Transactions on Modeling and Computer Simulation,
    Vol. 8, No. 1, January 1998, pp 3--30. */
 
-void mt_init_seed( struct mt *m, uint32_t seed )
-{
-    int i;
-    uint32_t *mt;
-
-    mt = m->mt;
-    mt[0] = seed & 0xffffffff;
-    for ( i = 1; i < N; i++ )
-        mt[i] = 1812433253 * (mt[i-1]^(mt[i-1]>>30)) + i;
-    m->mti = N;
-}
-
-struct mt *mt_setup(uint32_t seed)
+struct mt *mt_init(void)
 {
     struct mt *self = malloc(sizeof(struct mt));
-
-    if (self)
-        mt_init_seed( self, seed );
-
-    return self;
-}
-
-struct mt *mt_setup_array( uint32_t *array, int n )
-{
-    int i, j, k;
-    struct mt *self = malloc(sizeof(struct mt));
-    uint32_t *mt;
-
-    if (self) {
-        mt_init_seed( self, 19650218UL );
-
-        i = 1; j = 0;
-        k = ( N > n ? N : n );
-        mt = self->mt;
-
-        for (; k; k--) {
-            mt[i] = (mt[i] ^ ((mt[i-1] ^ (mt[i-1] >> 30)) * 1664525UL))
-                    + array[j] + j;
-            i++; j++;
-            if (i>=N) { mt[0] = mt[N-1]; i=1; }
-            if (j>=n) j=0;
-        }
-        for (k=N-1; k; k--) {
-            mt[i] = (mt[i] ^ ((mt[i-1] ^ (mt[i-1] >> 30)) * 1566083941UL)) - i;
-            i++;
-            if (i>=N) { mt[0] = mt[N-1]; i=1; }
-        }
-
-        mt[0] = 0x80000000UL;
-    }
-
     return self;
 }
 
@@ -73,7 +25,54 @@ void mt_free(struct mt *self)
     free(self);
 }
 
+uint32_t mt_get_seed(struct mt *self)
+{
+    return self->seed;
+}
+
+void mt_init_seed(struct mt *self, uint32_t seed)
+{
+    int i;
+    uint32_t *mt;
+
+    mt = self->mt;
+    mt[0] = seed & 0xffffffff;
+
+    for ( i = 1; i < N; i++ )
+        mt[i] = 1812433253 * (mt[i-1]^(mt[i-1]>>30)) + i;
+    self->mti = N;
+    self->seed = mt[0];
+}
+
+void mt_setup_array(struct mt *self, uint32_t *array, int n)
+{
+    int i, j, k;
+    uint32_t *mt;
+
+    mt_init_seed( self, 19650218UL );
+
+    i = 1; j = 0;
+    k = ( N > n ? N : n );
+    mt = self->mt;
+
+    for (; k; k--) {
+        mt[i] = (mt[i] ^ ((mt[i-1] ^ (mt[i-1] >> 30)) * 1664525UL)) + array[j]
+                + j;
+        i++; j++;
+        if (i>=N) { mt[0] = mt[N-1]; i=1; }
+        if (j>=n) j=0;
+    }
+    for (k=N-1; k; k--) {
+        mt[i] = (mt[i] ^ ((mt[i-1] ^ (mt[i-1] >> 30)) * 1566083941UL)) - i;
+        i++;
+        if (i>=N) { mt[0] = mt[N-1]; i=1; }
+    }
+
+    mt[0] = 0x80000000UL;
+}
+
 /* Returns a pseudorandom number which is uniformly distributed in [0,1) */
+
 double mt_genrand(struct mt *self)
 {
     int kk;

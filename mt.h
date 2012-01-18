@@ -16,11 +16,14 @@ enum { N = 624, M = 397 };
 struct mt {
     uint32_t mt[N];
     int mti;
+    uint32_t seed;
 };
 
-struct mt *mt_setup(uint32_t seed);
-struct mt *mt_setup_array(uint32_t *array, int n);
+struct mt *mt_init(void);
 void mt_free(struct mt *self);
+uint32_t mt_get_seed(struct mt *self);
+void mt_init_seed(struct mt *self, uint32_t seed);
+void mt_setup_array(struct mt *self, uint32_t *array, int n);
 double mt_genrand(struct mt *self);
 
 #endif
