@@ -7,5 +7,5 @@ WriteMakefile(
     ABSTRACT_FROM => 'MT.pm',
     AUTHOR        => 'Abhijit Menon-Sen',
     PREREQ_PM     => {"Time::HiRes" => 0},
-    LICENSE       => 'artistic_2',
+    LICENSE       => 'bsd',
 );
