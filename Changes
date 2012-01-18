@@ -1,7 +1,7 @@
 1.13    2012-01-20      Abhijit Menon-Sen <ams@toroid.org>
 
-    * New automatic seed generation mechanism by Florent Angly (bug #64640)
-    * Interfaces to retrieve the seed used implemeted by Florent Angly (bug #64640)
+    * New seed generation and retrieval mechanism by Florent Angly (bug
+      #64640 on rt.cpan.org).
 
 
 1.12    2010-09-29      Abhijit Menon-Sen <ams@toroid.org>
