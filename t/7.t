@@ -33,7 +33,7 @@ ok($num3 == $num6);
 
 # Generate a series of 3 random numbers the using same seed value but manually specified
 ok($gen = Math::Random::MT->new());
-ok($gen->set_seed($autoseed));
+ok($gen->set_seed($autoseed) == $autoseed);
 ok($num4 = $gen->rand());
 ok($num5 = $gen->rand());
 ok($num6 = $gen->rand());

@@ -14,6 +14,22 @@
    ACM Transactions on Modeling and Computer Simulation,
    Vol. 8, No. 1, January 1998, pp 3--30. */
 
+struct mt *mt_init(void)
+{
+    struct mt *self = malloc(sizeof(struct mt));
+    return self;
+}
+
+void mt_free(struct mt *self)
+{
+    free(self);
+}
+
+uint32_t mt_get_seed(struct mt *self)
+{
+    return self->seed;
+}
+
 void mt_init_seed(struct mt *self, uint32_t seed)
 {
     int i;
@@ -26,12 +42,6 @@ void mt_init_seed(struct mt *self, uint32_t seed)
         mt[i] = 1812433253 * (mt[i-1]^(mt[i-1]>>30)) + i;
     self->mti = N;
     self->seed = mt[0];
-}
-
-struct mt *mt_init(void)
-{
-    struct mt *self = malloc(sizeof(struct mt));
-    return self;
 }
 
 void mt_setup_array(struct mt *self, uint32_t *array, int n)
@@ -61,19 +71,8 @@ void mt_setup_array(struct mt *self, uint32_t *array, int n)
     mt[0] = 0x80000000UL;
 }
 
-void mt_free(struct mt *self)
-{
-    free(self);
-}
-
-uint32_t mt_get_seed(struct mt *self)
-{
-    uint32_t seed;
-    seed = self->seed;
-    return seed;
-}
-
 /* Returns a pseudorandom number which is uniformly distributed in [0,1) */
+
 double mt_genrand(struct mt *self)
 {
     int kk;

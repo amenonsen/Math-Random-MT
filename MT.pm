@@ -14,55 +14,56 @@ bootstrap Math::Random::MT $VERSION;
 
 sub new
 {
-    # Create a Math::Random::MT::Perl object
     my ($class, @seeds) = @_;
-    my $self = Math::Random::MT::init();
-    # Seed the random number generator
-    $self->set_seed(@seeds);
-    return $self;
-}
 
-sub rand
-{
-    my ($self, $N) = @_;
-    if (not ref $self) {
-        $N = $self;
-        Math::Random::MT::srand() unless defined $gen;
-        $self = $gen;
-    }
-    return ($N || 1) * $self->genrand();
+    my $self = Math::Random::MT::init();
+    $self->set_seed(@seeds);
+
+    return $self;
 }
 
 sub set_seed
 {
-    # Set the seed. Generate one automatically if none was provided.
     my ($self, @seeds) = @_;
     @seeds > 1 ? $self->setup_array(@seeds) :
-                 $self->init_seed($seeds[0]||_rand_seed());
-    return 1;
+                 $self->init_seed($seeds[0] || _rand_seed());
+    return $self->get_seed;
 }
 
 sub srand
 {
-    # Seed the random number generator and return the seed.
     my (@seeds) = @_;
     $gen = Math::Random::MT->new(@seeds);
     return $gen->get_seed;
 }
 
+sub rand
+{
+    my ($self, $N) = @_;
+
+    unless (ref $self) {
+        $N = $self;
+        Math::Random::MT::srand() unless defined $gen;
+        $self = $gen;
+    }
+
+    return ($N || 1) * $self->genrand();
+}
+
+# Generate a random seed using the built-in PRNG.
+
 sub _rand_seed {
-    # Create a random seed using Perl's builtin random number generator system
     my ($self) = @_;
-    # 1/ Seed Perl's srand() with a temporary random seed that varies quickly
-    # in time so that no two identical seeds are obtained if several seeds are
-    # automatically generated in a short time interval
-    my $tmp_seed = (gettimeofday)[1]; # time in microseconds
-    CORE::srand($tmp_seed);
-    # 2/ Generate the random seed to use using Perl's builtin rand() (unsigned
-    # 32-bit integer)
-    my $max = int(2**32-1); # Largest unsigned 32-bit integer
-    my $rand_seed = int(CORE::rand($max+1)); # An integer between 0 and $max
-    return $rand_seed;
+
+    # Seed rand with the number of microseconds elapsed in the current
+    # second. XXX The range is only a million values, repeating every
+    # second. Can't we do better? XXX
+
+    CORE::srand((gettimeofday)[1]);
+
+    # Use a random integer between 0 and 2**32-1 as our seed.
+
+    return int(CORE::rand(2**32));
 }
 
 sub import
@@ -117,9 +118,7 @@ This module implements two interfaces:
 
 =item new()
 
-Creates a new generator that is automatically seeded. The seed varies quickly
-in time so you can run many automatically-seeded processes at once without
-getting the same random numbers.
+Creates a new generator that is automatically seeded.
 
 =item new($seed)
 
@@ -167,9 +166,7 @@ first time it is used.
 
 <URL:http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html>
 
-Math::TrulyRandom
-
-Math::Random::MT::Perl
+Data::Entropy
 
 =head1 ACKNOWLEDGEMENTS
 
@@ -182,6 +179,10 @@ For giving me the idea to write this module.
 =item Philip Newton
 
 For several useful patches.
+
+=item Florent Angly
+
+For implementing seed generation and retrieval.
 
 =back
 

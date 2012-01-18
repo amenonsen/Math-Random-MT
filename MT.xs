@@ -49,12 +49,11 @@ mt_DESTROY(self)
     CODE:
         mt_free(self);
 
-double
+U32
 mt_get_seed(self)
     Math::Random::MT self
     CODE:
-        uint32_t seed = mt_get_seed(self);
-        RETVAL = (double) seed;
+        RETVAL = mt_get_seed(self);
     OUTPUT:
         RETVAL
 
