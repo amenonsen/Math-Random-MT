@@ -1,10 +1,9 @@
 #ifndef _MATH_MT_H_
 #define _MATH_MT_H_
 
-//#if defined(_MSC_VER) && (_MSC_VER <= 1600) // sufficient
-#if defined(_MSC_VER)                         // better?
+#if defined(_MSC_VER) && (_MSC_VER < 1600) // for MS Visual Studio prior to 2010
 typedef unsigned __int32 uint32_t;
-#elif defined(__linux__) || defined(__GLIBC__) || defined(__WIN32__) || defined(__APPLE__)
+#elif defined(__linux__) || defined(__GLIBC__) || defined(__WIN32__) || defined(_MSC_VER) || defined(__APPLE__)
 #include <stdint.h>
 #elif defined(__osf__)
 #include <inttypes.h>
