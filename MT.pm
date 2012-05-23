@@ -55,11 +55,11 @@ sub rand
 sub _rand_seed {
     my ($self) = @_;
 
-    # Seed rand with the same gettimeofday-based formula that is
-    # used in Perl, and return an integer between 0 and 2**32-1.
-
-    my ($s, $u) = gettimeofday;
-    CORE::srand(1000003*$s+3*$u);
+    # Get a seed at random through Perl's CORE::rand(). We do not call
+    # CORE::srand() to avoid altering the random numbers that other running
+    # scripts might be using. When using _rand_seed(), the seeds obtained are
+    # all different, even when doing many rapid calls to the function.
+    
     return int(CORE::rand(2**32));
 }
 
