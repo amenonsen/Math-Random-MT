@@ -1,3 +1,12 @@
+1.14_1  2012-05-23      Florent Angly <florent.angly@gmail.com>
+
+    * Fixed compilation problems with nmake on Windows platforms
+      (Florent Angly, bug #74984)
+
+    * Fixed issues with random seed (bug #77343, solution suggested by
+      Laurent Dami, fix implemented by Florent Angly)
+
+
 1.13    2012-01-20      Abhijit Menon-Sen <ams@toroid.org>
 
     * New seed generation and retrieval mechanism by Florent Angly (bug
