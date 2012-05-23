@@ -33,10 +33,12 @@ mt_init_seed(self, seed)
 void
 mt_setup_array(self, array, ...)
     Math::Random::MT self
-    CODE:
-        items--;
-        U32 * array = U32ArrayPtr( items );
+    U32 * array
+    PREINIT:
         U32 ix_array = 0;
+    CODE:
+        array = U32ArrayPtr( items );
+        items--;
         while ( items--) {
             array[ix_array] = (U32)SvIV(ST(ix_array+1));
             ix_array++;
