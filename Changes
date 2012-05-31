@@ -1,3 +1,8 @@
+1.xx                    Florent Angly <florent.angly@gmail.com>
+
+    * Fixed build failure on Hurd (reported and patched by Salvatore Bonaccorso)
+
+
 1.14    2012-05-27      Florent Angly <florent.angly@gmail.com>
 
     * Fixed compilation problems with nmake on Windows platforms
