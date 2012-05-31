@@ -3,12 +3,11 @@ package Math::Random::MT;
 use strict;
 use Carp;
 use DynaLoader;
-use Time::HiRes qw(gettimeofday); # standard in Perl >= 5.8
 use vars qw( @ISA $VERSION );
 
 my $gen = undef;
 @ISA = qw( DynaLoader );
-$VERSION = '1.14_1';
+$VERSION = '1.14';
 
 bootstrap Math::Random::MT $VERSION;
 

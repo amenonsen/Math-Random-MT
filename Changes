@@ -1,4 +1,4 @@
-1.14_1  2012-05-23      Florent Angly <florent.angly@gmail.com>
+1.14    2012-05-27      Florent Angly <florent.angly@gmail.com>
 
     * Fixed compilation problems with nmake on Windows platforms
       (Florent Angly, bug #74984)
