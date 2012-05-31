@@ -65,3 +65,11 @@ mt_genrand(self)
         RETVAL = mt_genrand(self);
     OUTPUT:
         RETVAL
+
+U32
+mt_genirand(self)
+    Math::Random::MT self
+    CODE:
+        RETVAL = mt_genirand(self);
+    OUTPUT:
+        RETVAL

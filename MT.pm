@@ -41,12 +41,24 @@ sub rand
     my ($self, $N) = @_;
 
     unless (ref $self) {
+        Math::Random::MT::srand() unless defined $gen;
+        $self = $gen;
+    }
+
+    return $self->genrand();
+}
+
+sub irand
+{
+    my ($self, $N) = @_;
+
+    unless (ref $self) {
         $N = $self;
         Math::Random::MT::srand() unless defined $gen;
         $self = $gen;
     }
 
-    return ($N || 1) * $self->genrand();
+    return ($N || 1) * $self->genirand();
 }
 
 # Generate a random seed using the built-in PRNG.
@@ -67,7 +79,7 @@ sub import
     no strict 'refs';
     my $pkg = caller;
     foreach my $sym (@_) {
-        if ($sym eq "srand" || $sym eq "rand") {
+        if ($sym eq 'srand' || $sym eq 'rand' || $sym eq 'irand') {
             *{"${pkg}::$sym"} = \&$sym;
         }
     }
@@ -93,9 +105,10 @@ Math::Random::MT - The Mersenne Twister PRNG
   $dice = int($gen->rand(6)+1);         # random integer between 1 and 6
   $coin = $gen->rand() < 0.5 ?          # flip a coin
     "heads" : "tails"
+  $int = $gen->irand();                 # random integer in [0, 2^32-1]
 
   ## Function-oriented interface:
-  use Math::Random::MT qw(srand rand);
+  use Math::Random::MT qw(srand rand irand);
   # now use srand() and rand() as you usually do in Perl
 
 =head1 DESCRIPTION
@@ -138,16 +151,15 @@ Retrieves the value of the seed used.
 Behaves exactly like Perl's builtin rand(), returning a number uniformly
 distributed in [0, $num) ($num defaults to 1).
 
+=item irand()
+
+Return a 32-bit integer, i.e. an integer uniformly distributed in [0, 2^32-1].
+
 =back
 
 =head2 Function-oriented interface
 
 =over
-
-=item rand($num)
-
-Behaves exactly like Perl's builtin rand(), returning a number uniformly
-distributed in [0, $num) ($num defaults to 1).
 
 =item srand($seed)
 
@@ -155,6 +167,15 @@ Behaves just like Perl's builtin srand(). As in Perl >= 5.14, the seed is
 returned. If you use this interface, it is strongly recommended that you
 call I<srand()> explicitly, rather than relying on I<rand()> to call it the
 first time it is used.
+
+=item rand($num)
+
+Behaves exactly like Perl's builtin rand(), returning a number uniformly
+distributed in [0, $num) ($num defaults to 1).
+
+=item irand()
+
+Return a 32-bit integer, i.e. an integer uniformly distributed in [0, 2^32-1].
 
 =back
 

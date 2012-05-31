@@ -1,6 +1,10 @@
 1.xx                    Florent Angly <florent.angly@gmail.com>
 
-    * Fixed build failure on Hurd (reported and patched by Salvatore Bonaccorso)
+    * Implemented irand() to draw random integers (bug #73298, reported by
+      crew@cs.stanford.edu)
+
+    * Fixed build failure on Hurd (bug #74165, reported and patched by Salvatore
+      Bonaccorso)
 
 
 1.14    2012-05-27      Florent Angly <florent.angly@gmail.com>

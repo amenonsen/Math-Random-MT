@@ -75,6 +75,13 @@ void mt_setup_array(struct mt *self, uint32_t *array, int n)
 
 double mt_genrand(struct mt *self)
 {
+    return mt_genirand(self)*(1.0/4294967296.0);
+}
+
+/* Returns a pseudorandom 32-bit integer uniformly distributed in [0,2^32-1] */
+
+uint32_t mt_genirand(struct mt *self)
+{
     int kk;
     uint32_t y;
     static uint32_t mag01[2] = {0x0, 0x9908b0df};
@@ -103,5 +110,6 @@ double mt_genrand(struct mt *self)
     y ^= y << 15 & 0xefc60000;
     y ^= y >> 18;
 
-    return y*(1.0/4294967296.0);
+    return y;
 }
+
