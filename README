@@ -12,9 +12,10 @@ SYNOPSIS
       $dice = int($gen->rand(6)+1);         # random integer between 1 and 6
       $coin = $gen->rand() < 0.5 ?          # flip a coin
         "heads" : "tails"
+      $int = $gen->irand();                 # random integer in [0, 2^32-1]
 
       ## Function-oriented interface:
-      use Math::Random::MT qw(srand rand);
+      use Math::Random::MT qw(srand rand irand);
       # now use srand() and rand() as you usually do in Perl
 
 DESCRIPTION
@@ -48,16 +49,24 @@ DESCRIPTION
         Behaves exactly like Perl's builtin rand(), returning a number
         uniformly distributed in [0, $num) ($num defaults to 1).
 
-  Function-oriented interface
-    rand($num)
-        Behaves exactly like Perl's builtin rand(), returning a number
-        uniformly distributed in [0, $num) ($num defaults to 1).
+    irand()
+        Returns a 32-bit integer, i.e. an integer uniformly distributed in
+        [0, 2^32-1].
 
+  Function-oriented interface
     srand($seed)
         Behaves just like Perl's builtin srand(). As in Perl >= 5.14, the
         seed is returned. If you use this interface, it is strongly
         recommended that you call *srand()* explicitly, rather than relying
         on *rand()* to call it the first time it is used.
+
+    rand($num)
+        Behaves exactly like Perl's builtin rand(), returning a number
+        uniformly distributed in [0, $num) ($num defaults to 1).
+
+    irand()
+        Returns a 32-bit integer, i.e. an integer uniformly distributed in
+        [0, 2^32-1].
 
 SEE ALSO
     <URL:http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html>

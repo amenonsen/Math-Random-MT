@@ -1,7 +1,7 @@
-1.xx                    Florent Angly <florent.angly@gmail.com>
+1.15    2012-06-04      Florent Angly <florent.angly@gmail.com>
 
-    * Implemented irand() to draw random integers (bug #73298, reported by
-      crew@cs.stanford.edu)
+    * Implemented irand() to draw random integers (bug #73298, feature requested
+      by crew@cs.stanford.edu)
 
     * Fixed build failure on Hurd (bug #74165, reported and patched by Salvatore
       Bonaccorso)

@@ -7,7 +7,7 @@ use vars qw( @ISA $VERSION );
 
 my $gen = undef;
 @ISA = qw( DynaLoader );
-$VERSION = '1.14';
+$VERSION = '1.15';
 
 bootstrap Math::Random::MT $VERSION;
 
@@ -153,7 +153,7 @@ distributed in [0, $num) ($num defaults to 1).
 
 =item irand()
 
-Return a 32-bit integer, i.e. an integer uniformly distributed in [0, 2^32-1].
+Returns a 32-bit integer, i.e. an integer uniformly distributed in [0, 2^32-1].
 
 =back
 
@@ -175,7 +175,7 @@ distributed in [0, $num) ($num defaults to 1).
 
 =item irand()
 
-Return a 32-bit integer, i.e. an integer uniformly distributed in [0, 2^32-1].
+Returns a 32-bit integer, i.e. an integer uniformly distributed in [0, 2^32-1].
 
 =back
 
