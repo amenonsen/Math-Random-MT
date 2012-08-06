@@ -15,8 +15,8 @@ ok $autoseed1 = srand();
 ok $autoseed2 = srand();
 ok $autoseed3 = srand();
 ok $autoseed4 = srand();
-isnt $autoseed1, $autoseed2;
-isnt $autoseed2, $autoseed3;
-isnt $autoseed3, $autoseed4;
+cmp_ok $autoseed1, '!=', $autoseed2;
+cmp_ok $autoseed2, '!=', $autoseed3;
+cmp_ok $autoseed3, '!=', $autoseed4;
 
 done_testing();

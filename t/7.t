@@ -33,16 +33,16 @@ ok $int5 = $gen->irand();
 ok $int6 = $gen->irand();
 
 # Both series of number should be the same
-is $num1, $num4;
-is $num2, $num5;
-is $num3, $num6;
-is $int1, $int4;
-is $int2, $int5;
-is $int3, $int6;
+cmp_ok $num1, '==', $num4;
+cmp_ok $num2, '==', $num5;
+cmp_ok $num3, '==', $num6;
+cmp_ok $int1, '==', $int4;
+cmp_ok $int2, '==', $int5;
+cmp_ok $int3, '==', $int6;
 
 # Generate a series of 6 random numbers the using same seed value but manually specified
 ok $gen = Math::Random::MT->new();
-is $gen->set_seed($autoseed), $autoseed;
+cmp_ok $gen->set_seed($autoseed), '==', $autoseed;
 ok $num4 = $gen->rand();
 ok $num5 = $gen->rand();
 ok $num6 = $gen->rand();
@@ -51,11 +51,11 @@ ok $int5 = $gen->irand();
 ok $int6 = $gen->irand();
 
 # Both series of number should be the same
-is $num1, $num4;
-is $num2, $num5;
-is $num3, $num6;
-is $int1, $int4;
-is $int2, $int5;
-is $int3, $int6;
+cmp_ok $num1, '==', $num4;
+cmp_ok $num2, '==', $num5;
+cmp_ok $num3, '==', $num6;
+cmp_ok $int1, '==', $int4;
+cmp_ok $int2, '==', $int5;
+cmp_ok $int3, '==', $int6;
 
 done_testing();
