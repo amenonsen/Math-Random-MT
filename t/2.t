@@ -17,7 +17,7 @@ delta_ok rand(), 0.135477004107088;
 delta_ok irand(), 3890346734;
 delta_ok irand(), 3586334585;
 
-delta_ok rand(10), 1.269868118688464, 'rand() takes a multiplier as argument';;
+delta_ok rand(10), 1.269868118688464, 'rand() takes a multiplier as argument';
 delta_ok rand(10), 9.688677710946649;
 
 delta_ok irand(123), 3922919429, 'irand() takes no argument'; # given argument does nothing

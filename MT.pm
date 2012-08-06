@@ -141,7 +141,8 @@ Creates a new generator seeded with an array of (up to 624) unsigned
 
 =item set_seed()
 
-Seeds the generator. It takes the same arguments as I<new()>.
+Seeds the generator and returns the seed used. It takes the same arguments as
+I<new()>.
 
 =item get_seed()
 
