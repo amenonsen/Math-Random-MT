@@ -4,10 +4,10 @@ BEGIN {
    use_ok('Math::Random::MT', qw(srand rand irand));
 }
 
-use vars qw($num1 $num2);
-
 
 # Check that it's possible to call rand() without srand()
+
+my ($num1, $num2);
 
 eval { $num1 = rand; };
 is $@, '', '$@ should be empty after rand() but it\'s: '.$@;

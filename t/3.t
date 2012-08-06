@@ -4,8 +4,8 @@ BEGIN {
    use_ok('Math::Random::MT', qw(srand rand irand));
 }
 
-use vars qw($num1 $num2);
 
+my ($num1, $num2);
 
 ok srand; # explicit srand, but without number
 
