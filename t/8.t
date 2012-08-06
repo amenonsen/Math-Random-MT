@@ -1,5 +1,6 @@
 use strict;
 use Test::More;
+use Test::Number::Delta within => 1e-14;
 BEGIN {
    use_ok('Math::Random::MT', qw(srand rand));
 }
@@ -32,11 +33,11 @@ ok $int5 = rand();
 ok $int6 = rand();
 
 # Both series of number should be the same
-cmp_ok $num1, '==', $num4;
-cmp_ok $num2, '==', $num5;
-cmp_ok $num3, '==', $num6;
-cmp_ok $int1, '==', $int4;
-cmp_ok $int2, '==', $int5;
-cmp_ok $int3, '==', $int6;
+delta_ok $num1, $num4;
+delta_ok $num2, $num5;
+delta_ok $num3, $num6;
+delta_ok $int1, $int4;
+delta_ok $int2, $int5;
+delta_ok $int3, $int6;
 
 done_testing();
