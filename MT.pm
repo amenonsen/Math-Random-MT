@@ -41,25 +41,26 @@ sub rand
     my ($self, $N) = @_;
 
     unless (ref $self) {
-        Math::Random::MT::srand() unless defined $gen;
-        $self = $gen;
-    }
-
-    return $self->genrand();
-}
-
-sub irand
-{
-    my ($self, $N) = @_;
-
-    unless (ref $self) {
         $N = $self;
         Math::Random::MT::srand() unless defined $gen;
         $self = $gen;
     }
 
-    return ($N || 1) * $self->genirand();
+    return ($N || 1) * $self->genrand();
 }
+
+sub irand
+{
+    my ($self) = @_;
+
+    unless (ref $self) {
+        Math::Random::MT::srand() unless defined $gen;
+        $self = $gen;
+    }
+
+    return $self->genirand();
+}
+
 
 # Generate a random seed using the built-in PRNG.
 

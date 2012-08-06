@@ -10,7 +10,7 @@ my ($num1, $num2);
 ok srand; # explicit srand, but without number
 
 eval { $num1 = rand; };
-is $@, '', '$@ should be empty after rand()';
+is $@, '', '$@ should be empty after rand() but it\'s: '.$@;
 isnt $num1, undef;
 cmp_ok $num1, '>=', 0;
 cmp_ok $num1, '<', 1; # rand without argument is like rand(1)
