@@ -7,7 +7,7 @@ use vars qw( @ISA $VERSION );
 
 my $gen = undef;
 @ISA = qw( DynaLoader );
-$VERSION = '1.16';
+$VERSION = '1.17';
 
 bootstrap Math::Random::MT $VERSION;
 
@@ -25,7 +25,7 @@ sub set_seed
 {
     my ($self, @seeds) = @_;
     @seeds > 1 ? $self->setup_array(@seeds) :
-                 $self->init_seed($seeds[0] || _rand_seed());
+                 $self->init_seed(defined $seeds[0] ? $seeds[0] : _rand_seed());
     return $self->get_seed;
 }
 
